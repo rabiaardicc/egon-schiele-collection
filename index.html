@@ -13,7 +13,6 @@
     h1 {
       text-align: center;
       font-size: 2.5em;
-      margin-bottom: 0.3em;
     }
     p.description {
       text-align: center;
@@ -21,17 +20,38 @@
       max-width: 800px;
       margin: 0 auto 40px auto;
     }
-    .artwork {
-      border-bottom: 1px solid #ccc;
-      padding: 15px 0;
-      max-width: 800px;
-      margin: 0 auto;
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
     }
-    .artwork h2 {
-      margin-bottom: 0;
+    .card {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      max-width: 300px;
+      padding: 15px;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
     }
-    .artwork p {
-      margin: 5px 0;
+    .card img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    .card h2 {
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+    .card p {
+      font-size: 0.9em;
+      margin: 4px 0;
+    }
+    .card a {
+      font-size: 0.8em;
+      color: #0066cc;
+      text-decoration: none;
     }
   </style>
 </head>
@@ -43,24 +63,25 @@
     This project highlights recurring themes such as physical distortion, emotional fragmentation, and erotic intensity.
   </p>
 
-  <div id="artworks"></div>
+  <div class="gallery" id="artworks"></div>
 
   <script>
-    fetch('schiele_collection.json')
+    fetch('schiele_collection_with_images.json')
       .then(response => response.json())
       .then(data => {
         const container = document.getElementById('artworks');
         data.forEach(work => {
-          const div = document.createElement('div');
-          div.className = 'artwork';
-          div.innerHTML = `
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            ${work.image ? `<a href="${work.image}" target="_blank"><img src="${work.image}"></a>` : ''}
             <h2>${work.title} (${work.year})</h2>
             <p><strong>Medium:</strong> ${work.medium}</p>
             <p><strong>Dimensions:</strong> ${work.dimensions}</p>
             <p><strong>Description:</strong> ${work.description}</p>
             <p><strong>Notes:</strong> ${work.notes}</p>
           `;
-          container.appendChild(div);
+          container.appendChild(card);
         });
       })
       .catch(error => {
