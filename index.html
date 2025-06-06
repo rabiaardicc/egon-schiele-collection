@@ -9,27 +9,65 @@
       margin: 40px;
       background-color: #f9f6f2;
       color: #333;
-      text-align: center;
     }
     h1 {
+      text-align: center;
       font-size: 2.5em;
       margin-bottom: 0.3em;
     }
-    p {
+    p.description {
+      text-align: center;
       font-size: 1.1em;
       max-width: 800px;
+      margin: 0 auto 40px auto;
+    }
+    .artwork {
+      border-bottom: 1px solid #ccc;
+      padding: 15px 0;
+      max-width: 800px;
       margin: 0 auto;
+    }
+    .artwork h2 {
+      margin-bottom: 0;
+    }
+    .artwork p {
+      margin: 5px 0;
     }
   </style>
 </head>
 <body>
 
   <h1>Egon Schiele: Expression, Eroticism, and the Divided Self</h1>
-  <p>
-    A data-driven exploration of ten selected works by Egon Schiele, 
-    restructured as JSON for the purposes of digital curation. 
+  <p class="description">
+    A data-driven exploration of ten selected works by Egon Schiele, restructured as JSON for the purposes of digital curation. 
     This project highlights recurring themes such as physical distortion, emotional fragmentation, and erotic intensity.
   </p>
+
+  <div id="artworks"></div>
+
+  <script>
+    fetch('schiele_collection.json')
+      .then(response => response.json())
+      .then(data => {
+        const container = document.getElementById('artworks');
+        data.forEach(work => {
+          const div = document.createElement('div');
+          div.className = 'artwork';
+          div.innerHTML = `
+            <h2>${work.title} (${work.year})</h2>
+            <p><strong>Medium:</strong> ${work.medium}</p>
+            <p><strong>Dimensions:</strong> ${work.dimensions}</p>
+            <p><strong>Description:</strong> ${work.description}</p>
+            <p><strong>Notes:</strong> ${work.notes}</p>
+          `;
+          container.appendChild(div);
+        });
+      })
+      .catch(error => {
+        document.getElementById('artworks').innerText = 'Failed to load data.';
+        console.error(error);
+      });
+  </script>
 
 </body>
 </html>
