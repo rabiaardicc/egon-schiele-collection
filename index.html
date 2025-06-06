@@ -59,14 +59,14 @@
 
   <h1>Egon Schiele: Expression, Eroticism, and the Divided Self</h1>
   <p class="description">
-    A data-driven exploration of ten selected works by Egon Schiele, restructured as JSON for the purposes of digital curation. 
+    A data-driven exploration of selected works by Egon Schiele, restructured as JSON for the purposes of digital curation. 
     This project highlights recurring themes such as physical distortion, emotional fragmentation, and erotic intensity.
   </p>
 
   <div class="gallery" id="artworks"></div>
 
   <script>
-    fetch('schiele_collection_final_fix.json')
+    fetch('schiele_collection_no_mother_and_daughter.json')
       .then(response => response.json())
       .then(data => {
         const container = document.getElementById('artworks');
